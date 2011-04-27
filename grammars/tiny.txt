@@ -1,0 +1,19 @@
+%Tokens BEGIN END PRINT READ SEMICOLON COMMA ID INTNUM ASSIGN LEFTPAR RIGHTPAR PLUS MINUS MULTIPLY MODULO
+%Non-Terminals <Tiny-program> <statement> <statement-list> <id-list> <exp-list> <exp> <exp-tail> <mult-term> <mult-term-tail> <mod-term> <mod-term-tail> <factor> <addop> <multop> <modop> <number>
+%Start <Tiny-program>
+%Rules
+<Tiny-program> : BEGIN <statement-list> END
+<statement-list> : <statement-list> <statement> | <statement> 
+<statement> : PRINT LEFTPAR <exp-list> RIGHTPAR SEMICOLON
+<statement> : ID ASSIGN <exp> SEMICOLON
+<statement> : READ LEFTPAR <id-list> RIGHTPAR SEMICOLON
+<id-list> : <id-list> COMMA ID | ID
+<exp-list> : <exp-list> COMMA <exp> | <exp>
+<exp> : <exp> <addop> <mult-term> | <mult-term>
+<mult-term> : <mult-term> <multop> <mod-term> | <mod-term>
+<mod-term> : <mod-term> <modop> <factor> | <factor>
+<factor> : LEFTPAR <exp> RIGHTPAR | <number>
+<addop> : PLUS | MINUS
+<multop> : MULTIPLY
+<modop> : MODULO
+<number> : ID | INTNUM

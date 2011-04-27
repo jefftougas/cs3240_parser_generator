@@ -1,0 +1,11 @@
+%Tokens LEFTPAR NUMBER RIGHTPAR PLUS MINUS MULTIPLY
+%Non-Terminals <exp> <exp-tail> <addop> <term> <term-tail> <mulop> <factor>
+%Start <exp>
+%Rules
+<exp> : <term> <exp-tail>
+<exp-tail> : <addop> <term> <exp-tail> | EMPTY
+<addop> : PLUS | MINUS
+<term> : <factor> <term-tail>
+<term-tail> : <mulop> <factor> <term-tail> | EMPTY
+<mulop> : MULTIPLY
+<factor> : LEFTPAR <exp> RIGHTPAR | NUMBER

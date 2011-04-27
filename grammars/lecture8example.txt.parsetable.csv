@@ -1,0 +1,8 @@
+M[N][T],LEFTPAR,NUMBER,RIGHTPAR,PLUS,MINUS,MULTIPLY,$
+<exp>,<term> <exp-tail>,<term> <exp-tail>,,,,,
+<exp-tail>,,,EMPTY,<addop> <term> <exp-tail>,<addop> <term> <exp-tail>,,EMPTY
+<addop>,,,,PLUS,MINUS,,
+<term>,<factor> <term-tail>,<factor> <term-tail>,,,,,
+<term-tail>,,,EMPTY,EMPTY,EMPTY,<mulop> <factor> <term-tail>,EMPTY
+<mulop>,,,,,,MULTIPLY,
+<factor>,LEFTPAR <exp> RIGHTPAR,NUMBER,,,,,

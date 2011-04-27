@@ -1,0 +1,6 @@
+M[N][T],NUMBER,IDENTIFIER,LEFT-PAR,RIGHT-PAR,$
+<lexp>,<atom>,<atom>,<list>,,
+<atom>,NUMBER,IDENTIFIER,,,
+<list>,,,LEFT-PAR <lexp-seq> RIGHT-PAR,,
+<lexp-seq>,<lexp> <lexp-seq-tail>,<lexp> <lexp-seq-tail>,<lexp> <lexp-seq-tail>,,
+<lexp-seq-tail>,<lexp> <lexp-seq-tail>,<lexp> <lexp-seq-tail>,<lexp> <lexp-seq-tail>,EMPTY,

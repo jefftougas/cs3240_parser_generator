@@ -1,0 +1,87 @@
+------------------------------------------------------------------
+---------------------- READING GRAMMAR FILE ----------------------
+------------------------------------------------------------------
+First line (tokens): [BEGIN, END, PRINT, READ, SEMICOLON, COMMA, ID, INTNUM, ASSIGN, LEFTPAR, RIGHTPAR, PLUS, MINUS, MULTIPLY, MODULO]
+Second line (non-terminals): [<Tiny-program>, <statement>, <statement-list>, <id-list>, <exp-list>, <exp>, <exp-tail>, <mult-term>, <mult-term-tail>, <mod-term>, <mod-term-tail>, <factor>, <addop>, <multop>, <modop>, <number>]
+Start variable: <Tiny-program>
+Rule: Symbol: <Tiny-program>, productions: ([BEGIN <statement-list> END])
+Rule: Symbol: <statement-list>, productions: ([<statement> <statement-list-tail>])
+Rule: Symbol: <statement-list-tail>, productions: ([<statement> <statement-list-tail>, EMPTY])
+Rule: Symbol: <statement>, productions: ([PRINT LEFTPAR <exp-list> RIGHTPAR SEMICOLON, ID ASSIGN <exp> SEMICOLON, READ LEFTPAR <id-list> RIGHTPAR SEMICOLON])
+Rule: Symbol: <id-list>, productions: ([ID <id-list-tail>])
+Rule: Symbol: <id-list-tail>, productions: ([COMMA ID <id-list-tail>, EMPTY])
+Rule: Symbol: <exp-list>, productions: ([<exp> <exp-list-tail>])
+Rule: Symbol: <exp-list-tail>, productions: ([COMMA <exp> <exp-list-tail>, EMPTY])
+Rule: Symbol: <exp>, productions: ([<mult-term> <exp-tail>])
+Rule: Symbol: <exp-tail>, productions: ([<addop> <mult-term> <exp-tail>, EMPTY])
+Rule: Symbol: <mult-term>, productions: ([<mod-term> <mult-term-tail>])
+Rule: Symbol: <mult-term-tail>, productions: ([<multop> <mod-term> <mult-term-tail>, EMPTY])
+Rule: Symbol: <mod-term>, productions: ([<factor> <mod-term-tail>])
+Rule: Symbol: <mod-term-tail>, productions: ([<modop> <factor> <mod-term-tail>, EMPTY])
+Rule: Symbol: <factor>, productions: ([LEFTPAR <exp> RIGHTPAR, <number>])
+Rule: Symbol: <addop>, productions: ([PLUS, MINUS])
+Rule: Symbol: <multop>, productions: ([MULTIPLY])
+Rule: Symbol: <modop>, productions: ([MODULO])
+Rule: Symbol: <number>, productions: ([ID, INTNUM])
+
+
+------------------------------------------------------------------
+----------------------  READING TOKEN FILE  ----------------------
+------------------------------------------------------------------
+
+Read tokens: [BEGIN, READ, LEFTPAR, ID, RIGHTPAR, SEMICOLON, ID, ASSIGN, INTNUM, PLUS, SEMICOLON, END]
+
+
+------------------------------------------------------------------
+----------------------   CALC FIRST SET     ----------------------
+------------------------------------------------------------------
+
+First set: {<statement-list>=[PRINT, ID, READ], <mod-term-tail>=[EMPTY, MODULO], <exp-tail>=[EMPTY, PLUS, MINUS], <id-list>=[ID], <mod-term>=[LEFTPAR, ID, INTNUM], <exp>=[LEFTPAR, ID, INTNUM], <addop>=[PLUS, MINUS], <multop>=[MULTIPLY], <number>=[ID, INTNUM], <Tiny-program>=[BEGIN], <mult-term>=[LEFTPAR, ID, INTNUM], <modop>=[MODULO], <id-list-tail>=[COMMA, EMPTY], <exp-list>=[LEFTPAR, ID, INTNUM], <mult-term-tail>=[EMPTY, MULTIPLY], <exp-list-tail>=[COMMA, EMPTY], <statement-list-tail>=[EMPTY, PRINT, ID, READ], <statement>=[PRINT, ID, READ], <factor>=[LEFTPAR, ID, INTNUM]}
+
+
+------------------------------------------------------------------
+----------------------   CALC FOLLOW SET    ----------------------
+------------------------------------------------------------------
+
+Follow set: {<statement-list>=[END], <mod-term-tail>=[MULTIPLY, PLUS, MINUS, SEMICOLON, COMMA, RIGHTPAR], <exp-tail>=[SEMICOLON, COMMA, RIGHTPAR], <id-list>=[RIGHTPAR], <mod-term>=[MULTIPLY, PLUS, MINUS, SEMICOLON, COMMA, RIGHTPAR], <exp>=[SEMICOLON, COMMA, RIGHTPAR], <addop>=[LEFTPAR, ID, INTNUM], <multop>=[LEFTPAR, ID, INTNUM], <Tiny-program>=[$], <number>=[MODULO, MULTIPLY, PLUS, MINUS, SEMICOLON, COMMA, RIGHTPAR], <mult-term>=[PLUS, MINUS, SEMICOLON, COMMA, RIGHTPAR], <modop>=[LEFTPAR, ID, INTNUM], <id-list-tail>=[RIGHTPAR], <exp-list>=[RIGHTPAR], <mult-term-tail>=[PLUS, MINUS, SEMICOLON, COMMA, RIGHTPAR], <exp-list-tail>=[RIGHTPAR], <statement-list-tail>=[END], <statement>=[PRINT, ID, READ, END], <factor>=[MODULO, MULTIPLY, PLUS, MINUS, SEMICOLON, COMMA, RIGHTPAR]}
+
+
+------------------------------------------------------------------
+----------------------   CALC PARSE TABLE   ----------------------
+------------------------------------------------------------------
+
+Note: This is in CSV (comma-separated value) format, and can be opened with Microsoft Excel or something similar.
+
+grammars/tiny.txt.parsetable.csv
+
+M[N][T],BEGIN,END,PRINT,READ,SEMICOLON,COMMA,ID,INTNUM,ASSIGN,LEFTPAR,RIGHTPAR,PLUS,MINUS,MULTIPLY,MODULO,$
+<Tiny-program>,BEGIN <statement-list> END,,,,,,,,,,,,,,,
+<statement>,,,PRINT LEFTPAR <exp-list> RIGHTPAR SEMICOLON,READ LEFTPAR <id-list> RIGHTPAR SEMICOLON,,,ID ASSIGN <exp> SEMICOLON,,,,,,,,,
+<statement-list>,,,<statement> <statement-list-tail>,<statement> <statement-list-tail>,,,<statement> <statement-list-tail>,,,,,,,,,
+<id-list>,,,,,,,ID <id-list-tail>,,,,,,,,,
+<exp-list>,,,,,,,<exp> <exp-list-tail>,<exp> <exp-list-tail>,,<exp> <exp-list-tail>,,,,,,
+<exp>,,,,,,,<mult-term> <exp-tail>,<mult-term> <exp-tail>,,<mult-term> <exp-tail>,,,,,,
+<exp-tail>,,,,,EMPTY,EMPTY,,,,,EMPTY,<addop> <mult-term> <exp-tail>,<addop> <mult-term> <exp-tail>,,,
+<mult-term>,,,,,,,<mod-term> <mult-term-tail>,<mod-term> <mult-term-tail>,,<mod-term> <mult-term-tail>,,,,,,
+<mult-term-tail>,,,,,EMPTY,EMPTY,,,,,EMPTY,EMPTY,EMPTY,<multop> <mod-term> <mult-term-tail>,,
+<mod-term>,,,,,,,<factor> <mod-term-tail>,<factor> <mod-term-tail>,,<factor> <mod-term-tail>,,,,,,
+<mod-term-tail>,,,,,EMPTY,EMPTY,,,,,EMPTY,EMPTY,EMPTY,EMPTY,<modop> <factor> <mod-term-tail>,
+<factor>,,,,,,,<number>,<number>,,LEFTPAR <exp> RIGHTPAR,,,,,,
+<addop>,,,,,,,,,,,,PLUS,MINUS,,,
+<multop>,,,,,,,,,,,,,,MULTIPLY,,
+<modop>,,,,,,,,,,,,,,,MODULO,
+<number>,,,,,,,ID,INTNUM,,,,,,,,
+<statement-list-tail>,,EMPTY,<statement> <statement-list-tail>,<statement> <statement-list-tail>,,,<statement> <statement-list-tail>,,,,,,,,,
+<id-list-tail>,,,,,,COMMA ID <id-list-tail>,,,,,EMPTY,,,,,
+<exp-list-tail>,,,,,,COMMA <exp> <exp-list-tail>,,,,,EMPTY,,,,,
+
+
+
+------------------------------------------------------------------
+----------------------    PARSE LANGUAGE    ----------------------
+------------------------------------------------------------------
+
+There was an error on token SEMICOLON
+Current input stack: [$, END, SEMICOLON]
+Current parse stack: [$, END, <statement-list-tail>, SEMICOLON, <exp-tail>, <mult-term>]
+Unsuccessful parse!

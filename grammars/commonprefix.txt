@@ -1,0 +1,8 @@
+%Tokens NUMBER IDENTIFIER LEFT-PAR RIGHT-PAR
+%Non-Terminals <lexp> <atom> <list> <lexp-seq>
+%Start <lexp>
+%Rules
+<lexp> : <atom> | <list>
+<atom> : NUMBER | IDENTIFIER
+<list> : LEFT-PAR <lexp-seq> RIGHT-PAR
+<lexp-seq> : <lexp> <lexp-seq> | <lexp>
